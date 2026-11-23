@@ -16,22 +16,36 @@ test_suite_config:
         # The suite also validates runtime infrastructure features such as namespace resolution, memory tracking, code generation, and queue-based operations.
         # Relevant Spyre capabilities include support for various dtypes and ops, but these tests do not leverage them directly.
         - names:
-            - TestTorchbind::test_torchbind_compile_symint
-            - TestTorchbind::test_aoti_torchbind_name_collision
-            - TestTorchbind::test_torchbind_aot_compile
-            - TestTorchbind::test_torchbind_aot_compile_constant_folding
-            - TestTorchbind::test_torchbind_aoti
             - TestTorchbind::test_torchbind_compile_gpu_op_symint_graph_partition
-            - TestTorchbind::test_torchbind_config_not_generated
+          mode: skip  # does not engage the torch-spyre layer
+        # Set to mandatory_success by the delta pipeline (decide.py, 2026-11-23).
+        - names:
+            - TestTorchbind::test_torchbind_compile_symint
             - TestTorchbind::test_torchbind_get_buf_bytes
             - TestTorchbind::test_torchbind_hop_schema
             - TestTorchbind::test_torchbind_hop_schema_no_input
             - TestTorchbind::test_torchbind_hop_schema_no_output
-            - TestTorchbind::test_torchbind_inductor
             - TestTorchbind::test_torchbind_input_aot_compile
+          mode: mandatory_success
+        # Set to xfail by the delta pipeline (decide.py, 2026-11-23).
+        # test_aoti_torchbind_name_collision: RuntimeError: Boolean value of Tensor with more than one value is ambiguous
+        # test_torchbind_aot_compile: RuntimeError: Boolean value of Tensor with more than one value is ambiguous
+        # test_torchbind_aot_compile_constant_folding: RuntimeError: Boolean value of Tensor with more than one value is ambiguous
+        # test_torchbind_aoti: RuntimeError: Boolean value of Tensor with more than one value is ambiguous
+        # test_torchbind_config_not_generated: RuntimeError: Boolean value of Tensor with more than one value is ambiguous
+        # test_torchbind_inductor: RuntimeError: Boolean value of Tensor with more than one value is ambiguous
+        # test_torchbind_list_return_aot_compile: RuntimeError: Boolean value of Tensor with more than one value is ambiguous
+        # test_torchbind_queue: RuntimeError: Boolean value of Tensor with more than one value is ambiguous
+        - names:
+            - TestTorchbind::test_aoti_torchbind_name_collision
+            - TestTorchbind::test_torchbind_aot_compile
+            - TestTorchbind::test_torchbind_aot_compile_constant_folding
+            - TestTorchbind::test_torchbind_aoti
+            - TestTorchbind::test_torchbind_config_not_generated
+            - TestTorchbind::test_torchbind_inductor
             - TestTorchbind::test_torchbind_list_return_aot_compile
             - TestTorchbind::test_torchbind_queue
-          mode: skip  # does not engage the torch-spyre layer
+          mode: xfail
 
   global:
     supported_dtypes:

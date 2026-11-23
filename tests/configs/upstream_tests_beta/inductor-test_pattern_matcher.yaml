@@ -18,21 +18,64 @@ test_suite_config:
         # They are classified as "skip" on the Spyre backend due to the lack of CUDA support, which is required for these tests to run successfully.
         # The relevant Spyre capability is its support for CPU-based operations, which does not include CUDA-specific functionalities.
         - names:
+            - TestPatternMatcher::test_scaled_softmax
+            - TestPatternMatcher::test_fused_int_mm_mul
+            - TestPatternMatcher::test_fused_int_mm_mul_epilogue
+            - TestPatternMatcher::test_fused_int_mm_mul_gating
+            - TestPatternMatcher::test_mixed_mm
+            - TestPatternMatcher::test_mixed_mm_bad_cases
+            - TestPatternMatcher::test_mixed_mm_epi_works
+            - TestPatternMatcher::test_mixed_mm_gating
+            - TestPatternMatcher::test_original_aten_preserved_split_addmm
+            - TestPatternMatcher::test_pointless_convert
+          mode: skip  # does not engage the torch-spyre layer
+        # Set to mandatory_success by the delta pipeline (decide.py, 2026-11-23).
+        - names:
             - TestPatternMatcher::test_input_output_same
             - TestPatternMatcher::test_mixed_mm_cpu
             - TestPatternMatcher::test_multioutput_register_replacement
+            - TestPatternMatcher::test_mutation_op_matching
             - TestPatternMatcher::test_pointless_cumsum
             - TestPatternMatcher::test_remove_noop_pass_with_remove_passes
             - TestPatternMatcher::test_remove_pointless_clones
-            - TestPatternMatcher::test_scaled_softmax
+            - TestPatternMatcher::test_serialized_patterns_up_to_date
+            - TestPatternMatcher::test_stable_topological_sort
             - TestPatternMatcher::test_symint_pattern_matching
-            - TestPatternMatcherLogging::test_failed_match_constant_args_format_string
-            - TestPatternMatcherLogging::test_gumbel_max_trick
-            - TestPatternMatcherLogging::test_pattern_match_debug_output
-            - TestPatternMatcherLogging::test_pattern_match_debug_all_nodes
-            - TestPatternMatcherLogging::test_pattern_match_debug_multiple_nodes
-            - TestPatternMatcherLogging::test_per_pattern_counter
-            - TestPatternMatcherLogging::test_per_pattern_counter_accumulation
+          mode: mandatory_success
+        # Set to xfail by the delta pipeline (decide.py, 2026-11-23).
+        # test_failed_match_constant_args_format_string: needs triage
+        # test_gumbel_max_trick: AssertionError: Torch not compiled with CUDA enabled
+        # test_pattern_match_debug_output: AssertionError: Torch not compiled with CUDA enabled
+        # test_pattern_match_debug_all_nodes: needs triage
+        # test_pattern_match_debug_multiple_nodes: needs triage
+        # test_per_pattern_counter: AssertionError: Torch not compiled with CUDA enabled
+        # test_per_pattern_counter_accumulation: needs triage
+        # test_addmm: AssertionError: Torch not compiled with CUDA enabled
+        # test_addmm_alpha_beta_with_pointwise: AssertionError: Torch not compiled with CUDA enabled
+        # test_addmm_broadcasting_bias: AssertionError: Torch not compiled with CUDA enabled
+        # test_addmm_dtype_mismatch: AssertionError: Torch not compiled with CUDA enabled
+        # test_addmm_symbolic_scalar: AssertionError: Torch not compiled with CUDA enabled
+        # test_bmm_to_mm: AssertionError: Torch not compiled with CUDA enabled
+        # test_cat_addmm: AssertionError: Torch not compiled with CUDA enabled
+        # test_cat_mm: AssertionError: Torch not compiled with CUDA enabled
+        # test_cat_slice_cat_cuda: AssertionError: Torch not compiled with CUDA enabled
+        # test_cat_splitwithsizes: AssertionError: Torch not compiled with CUDA enabled
+        # test_duplicate_search: AssertionError: Torch not compiled with CUDA enabled
+        # test_empty_like_pattern_matching: AssertionError: Torch not compiled with CUDA enabled
+        # test_fwd_only_generate_original_aten_meta: needs triage
+        # test_match_equivalent_function_invocations1: needs triage
+        # test_match_equivalent_function_invocations2: needs triage
+        # test_match_equivalent_function_invocations3: needs triage
+        # test_match_with_mutation: AssertionError: Torch not compiled with CUDA enabled
+        # test_mm_plus_mm: AssertionError: Torch not compiled with CUDA enabled
+        # test_pointless_permute_pair: AssertionError: Torch not compiled with CUDA enabled
+        # test_pointless_permute_pair_3d: AssertionError: Torch not compiled with CUDA enabled
+        # test_pointless_view_pair: AssertionError: Torch not compiled with CUDA enabled
+        # test_pointless_view_pair_dynamic_shapes: needs triage
+        # test_replace_mul_zero: AssertionError: Torch not compiled with CUDA enabled
+        # test_splitwithsizes_cat: AssertionError: Torch not compiled with CUDA enabled
+        # test_unfuse_bias_addmm: AssertionError: Torch not compiled with CUDA enabled
+        - names:
             - TestPatternMatcher::test_addmm
             - TestPatternMatcher::test_addmm_alpha_beta_with_pointwise
             - TestPatternMatcher::test_addmm_broadcasting_bias
@@ -45,32 +88,27 @@ test_suite_config:
             - TestPatternMatcher::test_cat_splitwithsizes
             - TestPatternMatcher::test_duplicate_search
             - TestPatternMatcher::test_empty_like_pattern_matching
-            - TestPatternMatcher::test_fused_int_mm_mul
-            - TestPatternMatcher::test_fused_int_mm_mul_epilogue
-            - TestPatternMatcher::test_fused_int_mm_mul_gating
             - TestPatternMatcher::test_fwd_only_generate_original_aten_meta
             - TestPatternMatcher::test_match_equivalent_function_invocations1
             - TestPatternMatcher::test_match_equivalent_function_invocations2
             - TestPatternMatcher::test_match_equivalent_function_invocations3
             - TestPatternMatcher::test_match_with_mutation
-            - TestPatternMatcher::test_mixed_mm
-            - TestPatternMatcher::test_mixed_mm_bad_cases
-            - TestPatternMatcher::test_mixed_mm_epi_works
-            - TestPatternMatcher::test_mixed_mm_gating
             - TestPatternMatcher::test_mm_plus_mm
-            - TestPatternMatcher::test_mutation_op_matching
-            - TestPatternMatcher::test_original_aten_preserved_split_addmm
-            - TestPatternMatcher::test_pointless_convert
             - TestPatternMatcher::test_pointless_permute_pair
             - TestPatternMatcher::test_pointless_permute_pair_3d
             - TestPatternMatcher::test_pointless_view_pair
             - TestPatternMatcher::test_pointless_view_pair_dynamic_shapes
             - TestPatternMatcher::test_replace_mul_zero
-            - TestPatternMatcher::test_serialized_patterns_up_to_date
             - TestPatternMatcher::test_splitwithsizes_cat
-            - TestPatternMatcher::test_stable_topological_sort
             - TestPatternMatcher::test_unfuse_bias_addmm
-          mode: skip  # does not engage the torch-spyre layer
+            - TestPatternMatcherLogging::test_failed_match_constant_args_format_string
+            - TestPatternMatcherLogging::test_gumbel_max_trick
+            - TestPatternMatcherLogging::test_pattern_match_debug_all_nodes
+            - TestPatternMatcherLogging::test_pattern_match_debug_multiple_nodes
+            - TestPatternMatcherLogging::test_pattern_match_debug_output
+            - TestPatternMatcherLogging::test_per_pattern_counter
+            - TestPatternMatcherLogging::test_per_pattern_counter_accumulation
+          mode: xfail
 
   global:
     supported_dtypes:

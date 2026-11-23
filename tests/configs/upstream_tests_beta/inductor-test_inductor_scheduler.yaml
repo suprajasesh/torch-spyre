@@ -8,19 +8,19 @@ test_suite_config:
         # These tests exercise the `batchmatmul` operation with `float16` and `float32` dtypes.
         # They are classified as `xfail` due to the Spyre backend's lack of support for `batchmatmul` on `float32`.
         # The relevant Spyre limitation is the unsupported `batchmatmul` operation for `float32` dtypes.
-        - names:
-            - TestScheduler::test_disable_get_estimated_runtime_logging
-          mode: xfail  # xfail: due to dxp_standalone
         # These tests exercise atomic operations, fusion policies, and tensor operations without engaging the torch-spyre layer.
         # They are classified as 'skip' because they do not interact with the Spyre backend, focusing on CPU-based operations.
         # Relevant Spyre limitations include the absence of CUDA support and the need for torch-spyre layer engagement.
         - names:
             - TestScheduler::test_atomic_add_no_fusion_correctness
             - TestScheduler::test_flop_counter_op
-            - TestScheduler::test_fusion_prevent_too_many_reads_and_writes_allows_fusion
-            - TestScheduler::test_fusion_prevent_too_many_reads_and_writes_prevents_fusion
             - TestScheduler::test_index_add_fusion_prevented
           mode: skip  # does not engage the torch-spyre layer
+        # Set to mandatory_success by the delta pipeline (decide.py, 2026-11-23).
+        - names:
+            - TestScheduler::test_fusion_prevent_too_many_reads_and_writes_allows_fusion
+            - TestScheduler::test_fusion_prevent_too_many_reads_and_writes_prevents_fusion
+          mode: mandatory_success
 
   global:
     supported_dtypes:

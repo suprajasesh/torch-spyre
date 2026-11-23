@@ -15,17 +15,29 @@ test_suite_config:
         # They are classified as 'skip' because they do not engage the torch-spyre layer, primarily due to CUDA dependency.
         # The relevant Spyre limitation is the lack of CUDA support, which is required for these tests to execute properly.
         - names:
+            - TestCase::test_codegen_upcast_to_fp32
+            - TestCase::test_dtype_aware_codegen
+            - TestCase::test_unbacked_float_uses_fp64_signature
+          mode: skip  # does not engage the torch-spyre layer
+        # Set to xfail by the delta pipeline (decide.py, 2026-11-23).
+        # test_any: AssertionError: Torch not compiled with CUDA enabled
+        # test_assoc_scan: AssertionError: Torch not compiled with CUDA enabled
+        # test_binary_math_mixed_precision: AssertionError: Torch not compiled with CUDA enabled
+        # test_downcast_div_mod: AssertionError: Torch not compiled with CUDA enabled
+        # test_op_dtype_propagation: AssertionError: Torch not compiled with CUDA enabled
+        # test_upcast_rank_0_cpu: needs triage
+        - names:
             - TestCase::test_any
             - TestCase::test_assoc_scan
             - TestCase::test_binary_math_mixed_precision
-            - TestCase::test_codegen_upcast_to_fp32
             - TestCase::test_downcast_div_mod
-            - TestCase::test_dtype_aware_codegen
             - TestCase::test_op_dtype_propagation
-            - TestCase::test_op_dtype_support
-            - TestCase::test_unbacked_float_uses_fp64_signature
             - TestCase::test_upcast_rank_0_cpu
-          mode: skip  # does not engage the torch-spyre layer
+          mode: xfail
+        # Set to mandatory_success by the delta pipeline (decide.py, 2026-11-23).
+        - names:
+            - TestCase::test_op_dtype_support
+          mode: mandatory_success
 
   global:
     supported_dtypes:

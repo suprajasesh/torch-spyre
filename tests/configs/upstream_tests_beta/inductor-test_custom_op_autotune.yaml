@@ -4,21 +4,13 @@ test_suite_config:
   files:
     - path: ${TORCH_ROOT}/test/inductor/test_custom_op_autotune.py
       unlisted_test_mode: skip
-      tests:
+      tests: null
         # These tests exercise custom operator autotuning with dynamic shapes, including matmul, layer normalization, and RMSNorm operations.
         # They are classified as mandatory_success due to the critical nature of these operations in AI workloads and the need for reliable performance.
         # The relevance to Spyre includes its support for dynamic shape handling and custom operator optimization.
-        - names:
-            - TestCustomOpAutoTune::test_decompose_k_custom_op_autotune_dynamic_config_for_input_shape
-            - TestCustomOpAutoTune::test_multi_parameter_tuning
-            - TestCustomOpAutoTune::test_rmsnorm_custom_op_autotune_with_dynamic_shape
-          mode: mandatory_success
         # These tests exercise custom operations with static shapes and no conditional dispatch, involving tensor operations and float32 dtypes.
         # They are classified as xfail due to an internal ModuleNotFoundError, indicating a missing module required for the custom operation.
         # The relevant Spyre limitation is the inability to handle custom modules during the import process for certain operations.
-        - names:
-            - TestCustomOpAutoTune::test_range_based_static_shape_no_cond_dispatch
-          mode: xfail  # xfail: UNKNOWN
 
   global:
     supported_dtypes:

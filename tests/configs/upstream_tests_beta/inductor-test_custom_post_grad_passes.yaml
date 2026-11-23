@@ -15,12 +15,15 @@ test_suite_config:
         # They are classified as 'skip' because they do not engage the torch-spyre layer, which is required for Spyre-specific optimizations.
         # Relevant Spyre limitations include the need for explicit torch-spyre layer engagement for backend-specific optimizations.
         - names:
-            - TestPostGradCustomPrePostPass::test_custom_joint_pass_post
             - TestPostGradCustomPrePostPass::test_custom_joint_pass_pre
-            - TestPostGradCustomPrePostPass::test_custom_post_pass
             - TestPostGradCustomPrePostPass::test_custom_pre_grad_pass
             - TestPostGradCustomPrePostPass::test_custom_pre_pass
           mode: skip  # does not engage the torch-spyre layer
+        # Set to mandatory_success by the delta pipeline (decide.py, 2026-11-23).
+        - names:
+            - TestPostGradCustomPrePostPass::test_custom_joint_pass_post
+            - TestPostGradCustomPrePostPass::test_custom_post_pass
+          mode: mandatory_success
 
   global:
     supported_dtypes:

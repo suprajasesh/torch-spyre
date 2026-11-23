@@ -14,9 +14,10 @@ test_suite_config:
         # These tests verify exception handling without stack traces in PyTorch.
         # They are skipped because they do not interact with the torch-spyre layer.
         # Relevant Spyre limitation: lack of device-specific exception handling.
+        # Set to mandatory_success by the delta pipeline (decide.py, 2026-11-23).
         - names:
             - TestLoweringExceptionStackTrace::test_lowering_exception_without_stack_trace
-          mode: skip  # does not engage the torch-spyre layer
+          mode: mandatory_success
 
   global:
     supported_dtypes:

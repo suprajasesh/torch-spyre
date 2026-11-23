@@ -17,15 +17,18 @@ test_suite_config:
         - names:
             - TestConfigFuzzer::test_config_fuzzer_dynamo_bisect
             - TestConfigFuzzer::test_config_fuzzer_inductor_gpu
-            - TestConfigFuzzer::test_fuzzer_inductor_calling_compile
-            - TestConfigFuzzer::test_fuzzer_running_test
-            - TestConfigFuzzer::test_sampling_method_random
-            - TestConfigFuzzer::test_sampling_method_toggle
+          mode: skip  # does not engage the torch-spyre layer
+        # Set to mandatory_success by the delta pipeline (decide.py, 2026-11-23).
+        - names:
             - TestConfigFuzzer::test_config_fuzzer_bisector_exception
             - TestConfigFuzzer::test_config_fuzzer_inductor_bisect
             - TestConfigFuzzer::test_config_fuzzer_inductor_cpu
             - TestConfigFuzzer::test_config_fuzzer_n_tuple
-          mode: skip  # does not engage the torch-spyre layer
+            - TestConfigFuzzer::test_fuzzer_inductor_calling_compile
+            - TestConfigFuzzer::test_fuzzer_running_test
+            - TestConfigFuzzer::test_sampling_method_random
+            - TestConfigFuzzer::test_sampling_method_toggle
+          mode: mandatory_success
 
   global:
     supported_dtypes:

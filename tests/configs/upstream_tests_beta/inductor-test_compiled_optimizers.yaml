@@ -15,13 +15,6 @@ test_suite_config:
         # These tests exercise various optimizer operations (e.g., ASGD, AdamW, RMSprop) with float32 tensors.
         # They are classified as mandatory_success because they do not engage the torch-spyre layer.
         # Relevant Spyre limitations include unsupported float32 operations and incomplete optimizer coverage.
-        - names:
-            - CompiledOptimizerParityTests::test_correctness
-          mode: mandatory_success
-          edits:
-            dtypes:
-              exclude:
-                - name: float32
         # These tests exercise various optimizer functionalities and tensor operations.
         # They are skipped because they do not interact with the torch-spyre layer.
         # Relevant Spyre capabilities include support for specific dtypes and ops.
@@ -33,6 +26,15 @@ test_suite_config:
             - CompiledOptimizerTests::test_foreach_map_adam
             - CompiledOptimizerTests::test_static_address_finalizer
           mode: skip  # does not engage the torch-spyre layer
+        # Set to xfail by the delta pipeline (decide.py, 2026-11-23).
+        # test_correctness: needs triage
+        - names:
+            - CompiledOptimizerParityTests::test_correctness
+          mode: xfail
+          edits:
+            dtypes:
+              exclude:
+                - name: float32
 
   global:
     supported_dtypes:

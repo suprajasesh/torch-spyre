@@ -16,12 +16,22 @@ test_suite_config:
         # The primary limitation is that the torch-spyre layer is not engaged, so Spyre capabilities are irrelevant.
         - names:
             - TestMoveConstructorsToGpu::test_multi_gpu
+          mode: skip  # does not engage the torch-spyre layer
+        # Set to xfail by the delta pipeline (decide.py, 2026-11-23).
+        # test_non_convertable_op_failure: AssertionError: Torch not compiled with CUDA enabled
+        # test_output_failure: AssertionError: Torch not compiled with CUDA enabled
+        # test_sets_equiv: AssertionError: Torch not compiled with CUDA enabled
+        # test_simple: AssertionError: Torch not compiled with CUDA enabled
+        - names:
             - TestMoveConstructorsToGpu::test_non_convertable_op_failure
             - TestMoveConstructorsToGpu::test_output_failure
             - TestMoveConstructorsToGpu::test_sets_equiv
             - TestMoveConstructorsToGpu::test_simple
+          mode: xfail
+        # Set to mandatory_success by the delta pipeline (decide.py, 2026-11-23).
+        - names:
             - TestMoveConstructorsToGpu::test_no_gpu
-          mode: skip  # does not engage the torch-spyre layer
+          mode: mandatory_success
 
   global:
     supported_dtypes:

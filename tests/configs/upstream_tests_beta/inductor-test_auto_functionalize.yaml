@@ -42,7 +42,6 @@ test_suite_config:
         - names:
             - AutoFunctionalizeTests::test_alias2_dynamic
             - AutoFunctionalizeTests::test_alias_id_input_to_custom_op
-            - AutoFunctionalizeTests::test_can_auto_functionalize
             - AutoFunctionalizeTests::test_dynamic2_v2
             - AutoFunctionalizeTests::test_dynamic3_v2
             - AutoFunctionalizeTests::test_dynamic_v2
@@ -52,8 +51,12 @@ test_suite_config:
             - AutoFunctionalizeTests::test_inference_mode4_v2
             - AutoFunctionalizeTests::test_slice_dynamic
             - AutoFunctionalizeTests::test_split_dynamic
-            - AutoFunctionalizeTests::test_try_use_slice
           mode: skip  # does not engage the torch-spyre layer
+        # Set to mandatory_success by the delta pipeline (decide.py, 2026-11-23).
+        - names:
+            - AutoFunctionalizeTests::test_can_auto_functionalize
+            - AutoFunctionalizeTests::test_try_use_slice
+          mode: mandatory_success
 
   global:
     supported_dtypes:

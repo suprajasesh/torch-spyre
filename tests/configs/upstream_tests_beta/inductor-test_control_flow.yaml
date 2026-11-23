@@ -721,7 +721,6 @@ test_suite_config:
             - WhileLoopTests::test_while_loop_with_conv_device_cuda_dynamic_False_autograd_True
             - WhileLoopTests::test_while_loop_with_conv_device_cuda_dynamic_True_autograd_False
             - WhileLoopTests::test_while_loop_with_conv_device_cuda_dynamic_True_autograd_True
-            - WhileLoopTests::test_while_loop_with_data_dependent_in_out
             - WhileLoopTests::test_while_loop_with_data_dependent_in_out_device_cpu_dynamic_False_autograd_False
             - WhileLoopTests::test_while_loop_with_data_dependent_in_out_device_cpu_dynamic_False_autograd_True
             - WhileLoopTests::test_while_loop_with_data_dependent_in_out_device_cpu_dynamic_True_autograd_False
@@ -730,9 +729,6 @@ test_suite_config:
             - WhileLoopTests::test_while_loop_with_data_dependent_in_out_device_cuda_dynamic_False_autograd_True
             - WhileLoopTests::test_while_loop_with_data_dependent_in_out_device_cuda_dynamic_True_autograd_False
             - WhileLoopTests::test_while_loop_with_data_dependent_in_out_device_cuda_dynamic_True_autograd_True
-            - WhileLoopTests::test_while_loop_with_data_dependent_in_out_mismatch
-            - WhileLoopTests::test_while_loop_with_data_dependent_in_out_mismatch_dynamic_False
-            - WhileLoopTests::test_while_loop_with_data_dependent_in_out_mismatch_dynamic_True
             - WhileLoopTests::test_while_loop_with_data_dependent_ops
             - WhileLoopTests::test_while_loop_with_data_dependent_ops_device_cpu_dynamic_False_autograd_False
             - WhileLoopTests::test_while_loop_with_data_dependent_ops_device_cpu_dynamic_False_autograd_True
@@ -798,6 +794,13 @@ test_suite_config:
             - WhileLoopTests::test_while_loop_zero_loop_device_cuda_dynamic_False
             - WhileLoopTests::test_while_loop_zero_loop_device_cuda_dynamic_True
           mode: skip  # does not engage the torch-spyre layer
+        # Set to mandatory_success by the delta pipeline (decide.py, 2026-11-23).
+        - names:
+            - WhileLoopTests::test_while_loop_with_data_dependent_in_out
+            - WhileLoopTests::test_while_loop_with_data_dependent_in_out_mismatch
+            - WhileLoopTests::test_while_loop_with_data_dependent_in_out_mismatch_dynamic_False
+            - WhileLoopTests::test_while_loop_with_data_dependent_in_out_mismatch_dynamic_True
+          mode: mandatory_success
 
   global:
     supported_dtypes:

@@ -18,15 +18,18 @@ test_suite_config:
         - names:
             - BenchmarkFusionCpuTest::test_avoid_register_spilling
             - BenchmarkFusionCpuTest::test_avoid_register_spilling_cpu
-            - BenchmarkFusionCpuTest::test_register_spills
-            - BenchmarkFusionCpuTest::test_register_spills_cpu
             - BenchmarkFusionCpuTest::test_resnet18
             - BenchmarkFusionCpuTest::test_resnet18_cpu
+          mode: skip  # does not engage the torch-spyre layer
+        # Set to mandatory_success by the delta pipeline (decide.py, 2026-11-23).
+        - names:
+            - BenchmarkFusionCpuTest::test_register_spills
+            - BenchmarkFusionCpuTest::test_register_spills_cpu
             - BenchmarkFusionCpuTest::test_softmax
             - BenchmarkFusionCpuTest::test_softmax_cpu
             - BenchmarkFusionCpuTest::test_tield_kernel_fusion
             - BenchmarkFusionCpuTest::test_tield_kernel_fusion_cpu
-          mode: skip  # does not engage the torch-spyre layer
+          mode: mandatory_success
 
   global:
     supported_dtypes:

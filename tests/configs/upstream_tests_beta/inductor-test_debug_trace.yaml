@@ -16,11 +16,14 @@ test_suite_config:
         # The relevance to Spyre is minimal, as these tests do not leverage any Spyre-specific capabilities or limitations.
         - names:
             - TestDebugTrace::test_debug_multi_tempalte
-            - TestDebugTrace::test_debug_printer_const
-            - TestDebugTrace::test_debug_trace
             - _cls_TestDebugTrace::test_debug_multi_tempalte
             - _cls_TestDebugTrace::test_debug_trace
           mode: skip  # does not engage the torch-spyre layer
+        # Set to mandatory_success by the delta pipeline (decide.py, 2026-11-23).
+        - names:
+            - TestDebugTrace::test_debug_printer_const
+            - TestDebugTrace::test_debug_trace
+          mode: mandatory_success
 
   global:
     supported_dtypes:

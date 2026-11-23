@@ -33,19 +33,11 @@ test_suite_config:
             - TestCompilationEventLogging::test_log_event_autograd_remote
             - TestCompilationEventLogging::test_log_event_inductor_both
             - TestCompilationEventLogging::test_log_event_inductor_local
-            - TestFxGraphCacheHashing::test_hash_custom_backend_config
-            - TestFxGraphCacheHashing::test_hash_custom_backend_pass
-            - TestFxGraphCacheHashing::test_hash_custom_partitioner_fn
-            - TestFxGraphCacheHashing::test_hash_private_config_changes
-            - TestFxGraphCacheHashing::test_hash_var_to_hint_override
           mode: xfail  # xfail: UNKNOWN
         # These tests exercise the hashing and caching mechanisms in PyTorch, including custom passes and keyword arguments.
         # They are classified as xfail due to mismatched sequence lengths and string comparisons, indicating issues with Spyre's handling of these mechanisms.
         # Relevant Spyre limitations include incomplete support for certain tensor operations and potential discrepancies in runtime behavior.
         - names:
-            - TestFxGraphCacheHashing::test_hash_config_changes
-            - TestFxGraphCacheHashing::test_hash_custom_passes
-            - TestFxGraphCacheHashing::test_hash_kwargs
             - TestPyCodeCache::test_editable_cached_wrapper
           mode: xfail  # xfail: AssertionError
         # These tests primarily focus on caching mechanisms and error handling in PyTorch, which do not directly interact with the torch-spyre layer.
@@ -56,24 +48,35 @@ test_suite_config:
             - TestAutotuneCache::test_autotune_cache_warm_start
             - TestAutotuneCache::test_bundled_autotune_remote_cache
             - TestCudaCompileCommand::test_cuda_compile_command
-            - TestFxGraphCacheHashing::test_bypass_on_runtime_error
-            - TestFxGraphCacheHashing::test_bypass_unsupported
-            - TestFxGraphCacheHashing::test_get_hash_for_files
-            - TestFxGraphCacheHashing::test_hash_fake_tensors
-            - TestFxGraphCacheHashing::test_non_pybind11_runtime_error_propagates
-            - TestFxGraphCacheHashing::test_parameter_constants
-            - TestFxGraphCacheHashing::test_stable_strings
             - TestFxGraphCache::test_async_compile_cache
-            - TestFxGraphCache::test_cache_hot_load_empty
-            - TestFxGraphCache::test_cache_hot_load_generic
             - TestFxGraphCache::test_flex_attention_caching
             - TestFxGraphCache::test_no_arguments_tensor_device_guards
             - TestFxGraphCache::test_tensor_device_guards_cpu_tensor
-            - TestPyCodeCache::test_linemaps_empty
             - TestRemoteAOTAutogradCache::test_autograd_remote_cache
             - TestRemoteAOTAutogradCache::test_autograd_remote_lazy_backward
             - TestUtils::test_force_disable_coordinate_descent
           mode: skip  # does not engage the torch-spyre layer
+        # Set to mandatory_success by the delta pipeline (decide.py, 2026-11-23).
+        - names:
+            - TestFxGraphCache::test_cache_hot_load_empty
+            - TestFxGraphCache::test_cache_hot_load_generic
+            - TestFxGraphCacheHashing::test_bypass_on_runtime_error
+            - TestFxGraphCacheHashing::test_bypass_unsupported
+            - TestFxGraphCacheHashing::test_get_hash_for_files
+            - TestFxGraphCacheHashing::test_hash_config_changes
+            - TestFxGraphCacheHashing::test_hash_custom_backend_config
+            - TestFxGraphCacheHashing::test_hash_custom_backend_pass
+            - TestFxGraphCacheHashing::test_hash_custom_partitioner_fn
+            - TestFxGraphCacheHashing::test_hash_custom_passes
+            - TestFxGraphCacheHashing::test_hash_fake_tensors
+            - TestFxGraphCacheHashing::test_hash_kwargs
+            - TestFxGraphCacheHashing::test_hash_private_config_changes
+            - TestFxGraphCacheHashing::test_hash_var_to_hint_override
+            - TestFxGraphCacheHashing::test_non_pybind11_runtime_error_propagates
+            - TestFxGraphCacheHashing::test_parameter_constants
+            - TestFxGraphCacheHashing::test_stable_strings
+            - TestPyCodeCache::test_linemaps_empty
+          mode: mandatory_success
 
   global:
     supported_dtypes:
